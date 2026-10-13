@@ -18,7 +18,6 @@ Demo credentials: `alice / alice123` and `bob / bob123`. These are lab-only cred
 ```bash
 sudo apt update
 sudo apt install -y mininet openvswitch-switch curl python3-venv netcat-openbsd
-cd ~/Downloads/cnproject/auth_network_access_control
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -33,7 +32,6 @@ Use four terminals. Do not close the running terminals during the demo.
 ### Terminal 1 — start Mininet (Person 3)
 
 ```bash
-cd ~/Downloads/cnproject/auth_network_access_control
 sudo mn -c
 sudo -E python3 topology.py
 ```
@@ -44,15 +42,14 @@ At the `mininet>` prompt:
 nodes
 net
 pingall
-h4 python3 /home/YOUR_UBUNTU_USERNAME/Downloads/cnproject/auth_network_access_control/protected_service.py --host 10.0.0.4 --port 9000 &
+h4 python3 $yourpath/protected_service.py --host 10.0.0.4 --port 9000 &
 ```
 
-Replace `YOUR_UBUNTU_USERNAME` with the output of `whoami`. More reliably, copy the full path printed by `topology.py` when it starts. If the extracted folder is elsewhere, use that folder's full path. The service must print that it is listening on `10.0.0.4:9000` (or you can confirm it with the connection test).
+
 
 ### Terminal 2 — start the SDN controller (Person 2)
 
 ```bash
-cd ~/Downloads/cnproject/auth_network_access_control
 sudo -E .venv/bin/python controller/auth_controller.py
 ```
 
@@ -68,7 +65,6 @@ The controller's REST API is deliberately bound to `127.0.0.1` for this local la
 ### Terminal 3 — run the authentication server (Person 1)
 
 ```bash
-cd ~/Downloads/cnproject/auth_network_access_control
 source .venv/bin/activate
 python3 auth_server.py
 ```
@@ -76,7 +72,6 @@ python3 auth_server.py
 ### Terminal 4 — run the interactive client (Person 1)
 
 ```bash
-cd ~/Downloads/cnproject/auth_network_access_control
 source .venv/bin/activate
 python3 client.py --host 127.0.0.1 --port 5000
 ```
